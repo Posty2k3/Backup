@@ -75,11 +75,25 @@ echo 'alias cd="z"' >> $HOME/.zshrc
 # Update Main Monitor - Login Screen
 cp ~/.config/monitors.xml ~gdm/.config/
 
-# Provide List of GNOME Extensions
-echo -e "Animation Tweaks\nBlur my Shell\nSound Input & Output Device Chooser\nTransparent Window Moving\nAppIndicator and KstatusNotifierItem Support\nArcMenu\nDash to Panel\nGameMode\nGnome 4x UI Improvements\nPamac Updates Indicator\nUser Themes\nWeather in the Clock\nWindow is Ready - Notification Remover\nNo overview at start-up" >> GNOMEExtensions.txt
-
 # Download Windows Programs
 wget https://download.dm.origin.com/origin/live/OriginSetup.exe
 wget https://github.com/bsnes-emu/bsnes/releases/download/v115/bsnes_v115-windows.zip
+mkdir -p $HOME/Games
+unzip bsnes_v115-windows.zip -d $HOME/Games/
+rm bsnes_v115-windows.zip
+
+# Download nvidia-vaapi-driver
+git clone https://github.com/elFarto/nvidia-vaapi-driver
+
+# Install Pipewire and Remove Pulseaudio
+pacman -Rdd manjaro-pulse
+pacman -Rdd pulseaudio
+yes | pacman -S manjaro-pipewire
+
+# Provide List of GNOME Extensions
+echo -e "Animation Tweaks\nBlur my Shell\nSound Input & Output Device Chooser\nTransparent Window Moving\nAppIndicator and KstatusNotifierItem Support\nArcMenu\nDash to Panel\nGameMode\nGnome 4x UI Improvements\nPamac Updates Indicator\nUser Themes\nWeather in the Clock\nWindow is Ready - Notification Remover\nNo overview at start-up" >> GNOMEExtensions.txt
+
+# Provide Todo List
+echo -e "Setup Spicetify: https://spicetify.app/docs/getting-started/installation\n\nNVIDIA Kernel Parameter:\nEdit /etc/default/grub\nAdd kernel option to the line GRUB_CMDLINE_LINUX\nGRUB_CMDLINE_LINUX="nvidia-drm.modeset=1"\nRegenerate /boot/grub/grub.cfg:\ngrub-mkconfig -o /boot/grub/grub.cfg\n\nSetup nvidia-vaapi-driver https://github.com/elFarto/nvidia-vaapi-driver\n\nPipewire Config:\nNoticeable audio delay when starting playback. This is caused by node suspension when inactive. It can be disabled by editing /etc/pipewire/media-session.d/*-monitor.conf depending on where the delay occurs and changing property session.suspend-timeout-seconds to 0 to disable or to experiment with other values and see what works. Alternatively you can comment out the line suspend-node in /etc/pipewire/media-session.d/media-session.conf. Restart both the pipewire and pipewire-pulse systemd services to apply these changes, or alternatively reboot." >> ToDoList.txt
 
 echo "All done! Please reboot the computer."
