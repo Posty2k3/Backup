@@ -3,8 +3,7 @@
 # INSTALL SCRIPT FOR Manjaro
 # RUN AS SUDO
 
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd .. || exit
+cd $HOME
 
 # System Update
 pacman -Syu
@@ -14,19 +13,19 @@ systemctl enable fstrim.timer
 systemctl start fstrim.timer
 
 # Install Dependencies
-pacman -S lib32-gnutls lib32-libldap lib32-libgpg-error lib32-libxml2 lib32-alsa-plugins lib32-sdl2 lib32-freetype2 lib32-dbus lib32-libgcrypt libgcrypt
+yes | pacman -S lib32-gnutls lib32-libldap lib32-libgpg-error lib32-libxml2 lib32-alsa-plugins lib32-sdl2 lib32-freetype2 lib32-dbus lib32-libgcrypt libgcrypt
 
 # Install Apps
-pacman -S vivaldi htop nvtop dolphin-emu mgba-qt micro zoxide mpv piper qbittorrent samba kitty etcher duf exa rofi neofetch steam-manjaro nfs-utils flameshot wine caprine wget zip unzip
+yes | pacman -S vivaldi htop nvtop dolphin-emu mgba-qt micro zoxide mpv piper qbittorrent samba kitty etcher duf exa rofi neofetch steam-manjaro nfs-utils flameshot wine caprine wget zip unzip winetricks lutris gnome-tweaks
 
 # AUR Setup
-pamac install base-devel git
+yes | pamac install base-devel git
 
 # AUR Installs
-pamac build bottles heroic-games-launcher-bin sameboy android-messages-desktop cemu gnome-shell-extension-weather-in-the-clock-git spicetify-cli-git spicetify-themes-git ttf-ms-fonts protontricks
+yes | pamac build bottles heroic-games-launcher-bin sameboy android-messages-desktop cemu gnome-shell-extension-weather-in-the-clock-git spicetify-cli-git spicetify-themes-git ttf-ms-fonts protontricks
 
 # Install Flatpak
-pamac install flatpak libpamac-flatpak-plugin
+yes | pamac install flatpak libpamac-flatpak-plugin
 
 # Flatpak Installs
 flatpak install flathub net.rpcs3.RPCS3 com.discordapp.Discord org.citra_emu.citra org.yuzu_emu.yuzu org.flycast.Flycast io.github.m64p.m64p com.github.PintaProject.Pinta net.davidotek.pupgui2 com.spotify.Client -y
@@ -36,12 +35,13 @@ git clone https://github.com/Posty2k3/Backup
 mkrdir -p $HOME/.config/kitty
 cp $HOME/Backup/kitty.conf $HOME/.config/kitty/
 
-# GTK Themes & Icons
+# GTK Themes & Icons & Wallpapers
 mkdir -p $HOME/.themes/
 mkdir -p $HOME/.icons/
 unzip $HOME/Backup/ThemesIcons.zip
 cp -r $HOME/Icons/* $HOME/.icons/
 cp -r $HOME/Themes/* $HOME/.themes/
+mv $HOME/Backup/*.png $HOME/Pictures/
 rm -rf $HOME/Icons
 rm -rf $HOME/Themes
 rm -rf $HOME/Backup
