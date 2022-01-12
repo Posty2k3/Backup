@@ -1,34 +1,33 @@
 #!/bin/bash
 
 # INSTALL SCRIPT FOR Manjaro
-# RUN AS SUDO
 
 cd $HOME
 
 # System Update
-pacman -Syu
+yes | sudo pacman -Syu
 
 # Enable Trim
-systemctl enable fstrim.timer
-systemctl start fstrim.timer
+sudo systemctl enable fstrim.timer
+sudo systemctl start fstrim.timer
 
 # Install Dependencies
-yes | pacman -S lib32-gnutls lib32-libldap lib32-libgpg-error lib32-libxml2 lib32-alsa-plugins lib32-sdl2 lib32-freetype2 lib32-dbus lib32-libgcrypt libgcrypt
+yes | sudo pacman -S lib32-gnutls lib32-libldap lib32-libgpg-error lib32-libxml2 lib32-alsa-plugins lib32-sdl2 lib32-freetype2 lib32-dbus lib32-libgcrypt libgcrypt
 
 # Install Apps
-yes | pacman -S vivaldi htop nvtop dolphin-emu mgba-qt micro zoxide mpv piper qbittorrent samba kitty etcher duf exa rofi neofetch steam-manjaro nfs-utils flameshot wine caprine wget zip unzip winetricks lutris gnome-tweaks
+sudo pacman -S vivaldi htop nvtop dolphin-emu mgba-qt micro zoxide mpv piper qbittorrent samba kitty etcher duf exa rofi neofetch steam-manjaro nfs-utils flameshot wine caprine wget zip unzip winetricks lutris gnome-tweaks yay
 
 # AUR Setup
-yes | pamac install base-devel git
+sudo pamac install base-devel git
 
 # AUR Installs
-yes | pamac build bottles heroic-games-launcher-bin sameboy android-messages-desktop cemu gnome-shell-extension-weather-in-the-clock-git spicetify-cli-git spicetify-themes-git ttf-ms-fonts protontricks
+yay -S bottles heroic-games-launcher-bin sameboy android-messages-desktop cemu gnome-shell-extension-weather-in-the-clock-git spicetify-cli-git spicetify-themes-git ttf-ms-fonts protontricks
 
 # Install Flatpak
-yes | pamac install flatpak libpamac-flatpak-plugin
+sudo pamac install flatpak libpamac-flatpak-plugin
 
 # Flatpak Installs
-flatpak install flathub net.rpcs3.RPCS3 com.discordapp.Discord org.citra_emu.citra org.yuzu_emu.yuzu org.flycast.Flycast io.github.m64p.m64p com.github.PintaProject.Pinta net.davidotek.pupgui2 com.spotify.Client -y
+sudo flatpak install flathub net.rpcs3.RPCS3 com.discordapp.Discord org.citra_emu.citra org.yuzu_emu.yuzu org.flycast.Flycast io.github.m64p.m64p com.github.PintaProject.Pinta net.davidotek.pupgui2 com.spotify.Client -y
 
 # Copy kitty conf
 git clone https://github.com/Posty2k3/Backup
@@ -47,8 +46,8 @@ rm -rf $HOME/Themes
 rm -rf $HOME/Backup
 
 # Flatpak Theme
-flatpak override --filesystem=$HOME/.themes
-flatpak override --env=GTK_THEME=Orchis-dark-compact
+sudo flatpak override --filesystem=$HOME/.themes
+sudo flatpak override --env=GTK_THEME=Orchis-dark-compact
 
 # Rofi Theme
 git clone https://github.com/undiabler/nord-rofi-theme
@@ -86,9 +85,9 @@ rm bsnes_v115-windows.zip
 git clone https://github.com/elFarto/nvidia-vaapi-driver
 
 # Install Pipewire and Remove Pulseaudio
-pacman -Rdd manjaro-pulse
-pacman -Rdd pulseaudio
-yes | pacman -S manjaro-pipewire
+yes | sudo pacman -Rdd manjaro-pulse
+yes | sudo pacman -Rdd pulseaudio
+yes | sudo pacman -S manjaro-pipewire
 
 # Provide List of GNOME Extensions
 echo -e "Animation Tweaks\nBlur my Shell\nSound Input & Output Device Chooser\nTransparent Window Moving\nAppIndicator and KstatusNotifierItem Support\nArcMenu\nDash to Panel\nGameMode\nGnome 4x UI Improvements\nPamac Updates Indicator\nUser Themes\nWeather in the Clock\nWindow is Ready - Notification Remover\nNo overview at start-up" >> GNOMEExtensions.txt
